@@ -32,14 +32,20 @@ Enjoy :)
 - With the hyperparameter I used, one step corresponds to 64 * 5 frames of inputs(64 * 5 * average 3 game framse).
 - Orange Line: with reward clipping(reward is clipped to -1 to 1) + Gradient Normalization, Purple Line: wihtout them
     - by the number of steps
-![](/assets/per_iteration.jpg)
+
+        ![](/assets/per_iteration.PNG)
+
     - by the number of episodes
-![](/assets/per_eps.jpg)
+
+        ![](/assets/per_eps.PNG)
+
     - by the time
-![](/assets/per_time.jpg)
+
+        ![](/assets/per_time.PNG)
 
 - Check the results on [my results page](https://gym.openai.com/evaluations/eval_DKtoUiYuSESwmJOOUWekw)
-[![Watch the video](/assets/output.gif)](https://openai-kubernetes-prod-scoreboard.s3.amazonaws.com/v1/evaluations/eval_DKtoUiYuSESwmJOOUWekw/training_episode_batch_video.mp4)
+
+    [![Watch the video](/assets/output.gif)](https://openai-kubernetes-prod-scoreboard.s3.amazonaws.com/v1/evaluations/eval_DKtoUiYuSESwmJOOUWekw/training_episode_batch_video.mp4)
 
 ## Training from scratch
 
