@@ -39,9 +39,15 @@ class A3CGroupAgent():
         self.episode_rewards = [[] for _ in envs]
         self.episode_reward = [0. for _ in envs]
 
-    def pick_action(self,s) :
+    def pick_action(self,s,greedy=False, epsilon=0.01) :
         pi_given_s = self.policy_func(s)
-        actions = [ self.random.choice(self.nA, 1, p=p)[0] for p in pi_given_s ]
+        if greedy :
+            if( self.random.rand() < epsilon ) :
+                actions = [self.random.randint(0,self.nA)]
+            else :
+                actions = np.argmax(pi_given_s,axis=1)
+        else :
+            actions = [ self.random.choice(self.nA, 1, p=p)[0] for p in pi_given_s ]
         return actions
 
     def enqueue_op(self,queue) :
@@ -113,7 +119,7 @@ class A3CGroupAgent():
         max_r = max(recent_rewards) if len(recent_rewards) > 0 else float("nan")
         return avg_r, max_r
 
-    def test_run(self,env,render=False):
+    def test_run(self,env,greedy,render=False):
         episode_reward = 0.0
         hist_buf = HistoryBuffer(self.preprocess,self.observe_shape,self.frames_for_state)
 
@@ -121,9 +127,9 @@ class A3CGroupAgent():
         state = hist_buf.add(o)
         while(True) :
             if( render ):
-                self.env.render()
-            action = self.pick_action(state)[0]
-            o, reward, done, _ = self.env.step(action)
+                env.render()
+            action = self.pick_action(np.expand_dims(state,axis=0),greedy)[0]
+            o, reward, done, _ = env.step(action)
             episode_reward += reward
             if(done):
                 break
